@@ -8,7 +8,6 @@ namespace Agibank.Domain.Builders
     public class VendasBuilder
     {
         string id, vendedorNome, itens;
-
         public VendasBuilder ComId(string id)
         {
             this.id = id;
