@@ -26,7 +26,6 @@ namespace Agibank.EventBus.Consumer
                     builder.AddEnvironmentVariables();
                     builder.AddCommandLine(args);
                 })
-                //.ConfigureLogging((host, builder) => builder.UseSerilog(host.Configuration).AddSerilog())
                 .Build();
     }
 }
