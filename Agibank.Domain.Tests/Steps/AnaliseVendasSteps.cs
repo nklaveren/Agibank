@@ -1,5 +1,4 @@
 ﻿using Agibank.Domain.Builders;
-using Agibank.Domain.Entities;
 
 using System.Globalization;
 using System.Linq;
@@ -14,20 +13,20 @@ namespace Agibank.Domain.Tests.Steps
     public class AnaliseVendasSteps
     {
         string linha;
-        AnaliseVendasBuilder construtor;
+        AnaliseVendasRelatorioFactory analiseVendasFactory;
 
         [BeforeScenario]
         public void Init()
         {
             linha = "";
-            construtor = new AnaliseVendasBuilder();
+            analiseVendasFactory = new AnaliseVendasRelatorioFactory();
         }
 
         [AfterScenario]
         public void Close()
         {
             linha = null;
-            construtor = null;
+            analiseVendasFactory = null;
         }
         [Given(@"que tenho dados do vendedor")]
         public void DadoQueTenhoDadosDoVendedor(Table table)
@@ -44,9 +43,9 @@ namespace Agibank.Domain.Tests.Steps
         [Then(@"O resultado esperado é uma instancia de um vendedor:")]
         public void EntaoOResultadoEsperadoEUmaInstanciaDeUmVendedor(Table table)
         {
-            construtor.Add(linha);
+            analiseVendasFactory.Adicionar(linha);
 
-            var vendedor = construtor.Vendedores.FirstOrDefault();
+            var vendedor = analiseVendasFactory.Vendedores.FirstOrDefault();
             var assertVendedor = table.Rows[0];
 
             Assert.Equal(vendedor.Cpf, assertVendedor["CPF"]);
@@ -66,9 +65,9 @@ namespace Agibank.Domain.Tests.Steps
         [Then(@"O resultado esperado é uma instancia de um Cliente:")]
         public void EntaoOResultadoEsperadoEUmaInstanciaDeUmCliente(Table table)
         {
-            construtor.Add(linha);
+            analiseVendasFactory.Adicionar(linha);
 
-            var cliente = construtor.Clientes.FirstOrDefault();
+            var cliente = analiseVendasFactory.Clientes.FirstOrDefault();
             var assertCliente = table.Rows[0];
 
             Assert.Equal(cliente.Cnpj, assertCliente["CNPJ"]);
@@ -85,9 +84,9 @@ namespace Agibank.Domain.Tests.Steps
         [Then(@"O resultado esperado é uma instancia de uma Venda:")]
         public void EntaoOResultadoEsperadoEUmaInstanciaDeUmaVenda(Table table)
         {
-            construtor.Add(linha);
+            analiseVendasFactory.Adicionar(linha);
 
-            var vendas = construtor.Vendas.FirstOrDefault();
+            var vendas = analiseVendasFactory.Vendas.FirstOrDefault();
 
             var assertVendas = table.Rows[0];
 
@@ -98,7 +97,7 @@ namespace Agibank.Domain.Tests.Steps
         [Then(@"os itens da da venda são:")]
         public void EntaoOsItensDaDaVendaSao(Table table)
         {
-            var itensVenda = construtor.Vendas.FirstOrDefault().Items;
+            var itensVenda = analiseVendasFactory.Vendas.FirstOrDefault().Items;
 
             for (int i = 0; i < table.Rows.Count; i++)
             {
@@ -116,18 +115,14 @@ namespace Agibank.Domain.Tests.Steps
         {
             for (int i = 0; i < table.Rows.Count; i++)
             {
-                construtor.Add(GetLinha(table, i));
+                analiseVendasFactory.Adicionar(GetLinha(table, i));
             }
         }
 
         [Then(@"O resultado esperado da analise é:")]
         public void EntaoOResultadoEsperadoDaAnaliseE(Table table)
         {
-            var analise = new AnaliseVendasRelatorio()
-                    .ComClientes(construtor.Clientes)
-                    .ComVendedores(construtor.Vendedores)
-                    .ComVendas(construtor.Vendas)
-                    .Construir();
+            var analise = analiseVendasFactory.Fabricar();
 
             var row = table.Rows[0];
 

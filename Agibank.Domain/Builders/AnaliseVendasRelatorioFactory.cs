@@ -2,28 +2,24 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Agibank.Domain.Builders
 {
-    public sealed class AnaliseVendasBuilder : IDisposable
+    public sealed class AnaliseVendasRelatorioFactory : IDisposable
     {
         public const char SEPARADOR = 'ç';
         private const string VENDEDOR = "001";
         private const string CLIENTE = "002";
         private const string VENDAS = "003";
 
-        public AnaliseVendasBuilder()
-        {
-        }
-
         public List<Cliente> Clientes { get; set; } = new List<Cliente>();
         public List<Vendas> Vendas { get; set; } = new List<Vendas>();
         public List<Vendedor> Vendedores { get; set; } = new List<Vendedor>();
 
-
-        public void Add(string item)
+        public void Adicionar(string item)
         {
-            var itemSplit = item.Split(AnaliseVendasBuilder.SEPARADOR);
+            var itemSplit = item.Split(AnaliseVendasRelatorioFactory.SEPARADOR);
             var tipo = itemSplit[0];
             switch (tipo)
             {
@@ -53,6 +49,39 @@ namespace Agibank.Domain.Builders
                             .Construir());
                     break;
             };
+        }
+
+        public AnaliseVendasRelatorio Fabricar()
+        {
+            var relatorio = new AnaliseVendasRelatorio();
+            if (Clientes != null)
+            {
+                relatorio.Clientes = Clientes.Count;
+            }
+
+            if (Vendedores != null)
+            {
+                relatorio.Vendedores = Vendedores.Count;
+            }
+            if (Vendas != null)
+            {
+                var maiorVenda = Vendas.OrderByDescending(x => x.Total).FirstOrDefault();
+                if (maiorVenda != null)
+                {
+                    relatorio.MelhorVenda = maiorVenda.Id;
+                }
+
+                var piorVendedor = Vendas.GroupBy(x => x.VendedorNome)
+                    .Select(x => new { Vendedor = x.Key, Total = x.Sum(_ => _.Total) })
+                    .OrderBy(x => x.Total)
+                    .FirstOrDefault();
+
+                if (piorVendedor != null)
+                {
+                    relatorio.PiorVendedor = piorVendedor.Vendedor;
+                }
+            }
+            return relatorio;
         }
 
         public void Dispose()

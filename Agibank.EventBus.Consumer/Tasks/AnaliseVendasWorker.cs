@@ -101,22 +101,17 @@ namespace Agibank.EventBus.Consumer.Tasks
         {
             try
             {
-                var construtor = new AnaliseVendasBuilder();
+
                 var file = Path.Combine(config.PathIn, arquivoNome);
 
-                await LerLinhaPorLinha(construtor, file);
+                var analiseVendasFactory = await LerLinhaPorLinha(file);
 
-                var analise = new AnaliseVendasRelatorio()
-                    .ComClientes(construtor.Clientes)
-                    .ComVendedores(construtor.Vendedores)
-                    .ComVendas(construtor.Vendas)
-                    .Construir();
+                var relatorio = analiseVendasFactory.Fabricar();
 
                 var arquivoSaidaNome = string.Format(config.OutputFilename, arquivoNome);
-                await fileService.WriteFile(analise.ToString(), config.PathOut, arquivoSaidaNome);
+                await fileService.WriteFile(relatorio.ToString(), config.PathOut, arquivoSaidaNome);
 
-                construtor.Dispose();
-                analise.Dispose();
+                analiseVendasFactory.Dispose();
 
                 logger.LogInformation($"o arquivo {arquivoNome} foi processado");
             }
@@ -126,9 +121,10 @@ namespace Agibank.EventBus.Consumer.Tasks
             }
         }
 
-        private async Task LerLinhaPorLinha(AnaliseVendasBuilder construtor, string file)
+        private async Task<AnaliseVendasRelatorioFactory> LerLinhaPorLinha(string file)
         {
             ConcurrentQueue<string> queue = new ConcurrentQueue<string>();
+            var analiseVendasFactory = new AnaliseVendasRelatorioFactory();
             Stream stream = fileService.GetFileContent(file + config.Extension);
             var streamReader = new StreamReader(stream);
 
@@ -143,9 +139,10 @@ namespace Agibank.EventBus.Consumer.Tasks
             {
                 while (queue.TryDequeue(out var linhaQueue))
                 {
-                    construtor.Add(linhaQueue);
+                    analiseVendasFactory.Adicionar(linhaQueue);
                 }
             });
+            return analiseVendasFactory;
         }
     }
 }
