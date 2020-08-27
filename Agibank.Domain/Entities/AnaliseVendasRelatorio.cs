@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Agibank.Domain.Services
+namespace Agibank.Domain.Entities
 {
     public class AnaliseVendasRelatorio
     {
         const string SEPARADOR = "ç";
-        private List<Entities.Cliente> _clientes;
-        private List<Entities.Vendedor> _vendedores;
-        private List<Entities.Vendas> _vendas;
+        private List<Cliente> _clientes;
+        private List<Vendedor> _vendedores;
+        private List<Vendas> _vendas;
 
         public string PiorVendedor { get; set; }
         public long MelhorVenda { get; set; }

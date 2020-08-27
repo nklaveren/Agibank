@@ -1,4 +1,5 @@
 ﻿using Agibank.Domain.Builders;
+using Agibank.Domain.Entities;
 using Agibank.Domain.Interfaces;
 using Agibank.Domain.Services;
 
@@ -113,8 +114,10 @@ namespace Agibank.EventBus.Consumer.Tasks
 
                 var arquivoSaidaNome = string.Format(config.OutputFilename, arquivoNome);
                 await fileService.WriteFile(analise.ToString(), config.PathOut, arquivoSaidaNome);
+
                 construtor.Dispose();
                 analise.Dispose();
+
                 logger.LogInformation($"o arquivo {arquivoNome} foi processado");
             }
             catch (Exception ex)

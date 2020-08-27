@@ -1,5 +1,5 @@
 ﻿using Agibank.Domain.Builders;
-using Agibank.Domain.Services;
+using Agibank.Domain.Entities;
 
 using System.Globalization;
 using System.Linq;
