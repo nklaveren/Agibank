@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Agibank.EventBus.Consumer": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}

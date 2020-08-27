@@ -1,0 +1,45 @@
+version: '3.4'
+
+services:
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "15672:15672" 
+      - "5672:5672"
+
+  Agibank.EventBus.producer:
+    image: ${DOCKER_REGISTRY-}agibankqueueproducer
+    build:
+      context: .
+      dockerfile: Agibank.EventBus.Producer/Dockerfile
+    depends_on:
+      - rabbitmq
+    volumes:
+     - ~/data:/app/data
+    ports:
+     - 8080:80
+    healthcheck:
+      test: curl -f https://localhost:8080/hc || exit 1
+      interval: 5s 
+      timeout: 10s 
+      retries: 3
+      start_period: 50s
+  
+  Agibank.EventBus.consumer:
+    image: ${DOCKER_REGISTRY-}agibankqueueconsumer
+    build:
+      context: .
+      dockerfile: Agibank.EventBus.Consumer/Dockerfile
+    depends_on:
+      - rabbitmq
+    volumes:
+     - ~/data:/app/data
+    ports:
+     - 8081:80
+    healthcheck:
+      test: curl -f https://localhost:8081/hc || exit 1
+      interval: 5s 
+      timeout: 10s 
+      retries: 3
+      start_period: 50s

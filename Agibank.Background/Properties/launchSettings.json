@@ -1,0 +1,10 @@
+﻿{
+  "profiles": {
+    "Agibank.Background": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
