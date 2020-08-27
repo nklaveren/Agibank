@@ -2,10 +2,10 @@
 {
     public struct Cliente
     {
-        public Cliente(string cnpj, string name, string areaNegocio)
+        public Cliente(string cnpj, string nome, string areaNegocio)
         {
             this.Cnpj = cnpj;
-            this.Nome = name;
+            this.Nome = nome;
             this.AreaNegocio = areaNegocio;
         }
 

@@ -2,7 +2,6 @@
 {
     public class ConsumerSettings
     {
-        public int Threads { get; set; }
         public string PathIn { get; set; }
         public string PathOut { get; set; }
         public string OutputFilename { get; set; }

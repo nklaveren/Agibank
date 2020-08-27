@@ -1,4 +1,6 @@
-﻿namespace Agibank.Domain.Entities
+﻿using System;
+
+namespace Agibank.Domain.Entities
 {
     public struct Vendedor
     {

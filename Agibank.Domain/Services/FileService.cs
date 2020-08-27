@@ -2,12 +2,9 @@
 
 using Microsoft.Extensions.FileProviders;
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.AccessControl;
-using System.Security.Principal;
 using System.Threading.Tasks;
 
 namespace Agibank.Domain.Services
@@ -37,15 +34,6 @@ namespace Agibank.Domain.Services
                 return provider.GetFileInfo(path).CreateReadStream();
             }
             else return default;
-        }
-
-        public string GetFileName(string path)
-        {
-            if (File.Exists(path))
-            {
-                return new FileInfo(path).Name.Split('.')[0];
-            }
-            return default;
         }
 
         public Task WriteFile(string fileContent, string path, string outputFilename)

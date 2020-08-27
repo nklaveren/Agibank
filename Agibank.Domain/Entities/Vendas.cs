@@ -5,10 +5,6 @@ namespace Agibank.Domain.Entities
 {
     public class Vendas
     {
-        public Vendas(string[] itemSplit, List<VendasItem> items) : this(
-            id: long.Parse(itemSplit[1]), vendedorNome: itemSplit[3], items: items ?? new List<VendasItem>())
-        { }
-
         public Vendas(long id, string vendedorNome, List<VendasItem> items)
         {
             this.Id = id;

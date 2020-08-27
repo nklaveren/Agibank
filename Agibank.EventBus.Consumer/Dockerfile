@@ -8,7 +8,6 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 COPY ["Agibank.EventBus.Consumer/Agibank.EventBus.Consumer.csproj", "Agibank.EventBus.Consumer/"]
-COPY ["Agibank.Shared/Agibank.Shared.csproj", "Agibank.Shared/"]
 COPY ["Agibank.Domain/Agibank.Domain.csproj", "Agibank.Domain/"]
 RUN dotnet restore "Agibank.EventBus.Consumer/Agibank.EventBus.Consumer.csproj"
 COPY . .

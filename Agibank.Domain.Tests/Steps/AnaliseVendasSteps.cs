@@ -1,4 +1,5 @@
-﻿using Agibank.Domain.Services;
+﻿using Agibank.Domain.Builders;
+using Agibank.Domain.Services;
 
 using System.Globalization;
 using System.Linq;
@@ -13,13 +14,13 @@ namespace Agibank.Domain.Tests.Steps
     public class AnaliseVendasSteps
     {
         string linha;
-        AnaliseVendasConstrutor construtor;
+        AnaliseVendasBuilder construtor;
 
         [BeforeScenario]
         public void Init()
         {
             linha = "";
-            construtor = new AnaliseVendasConstrutor();
+            construtor = new AnaliseVendasBuilder();
         }
 
         [AfterScenario]
@@ -44,11 +45,15 @@ namespace Agibank.Domain.Tests.Steps
         public void EntaoOResultadoEsperadoEUmaInstanciaDeUmVendedor(Table table)
         {
             construtor.Add(linha);
+
             var vendedor = construtor.Vendedores.FirstOrDefault();
             var assertVendedor = table.Rows[0];
+
             Assert.Equal(vendedor.Cpf, assertVendedor["CPF"]);
             Assert.Equal(vendedor.Nome, assertVendedor["Nome"]);
+
             var salario = decimal.Parse(assertVendedor["Salario"], CultureInfo.InvariantCulture);
+
             Assert.Equal(vendedor.Salario, salario);
         }
 
@@ -62,8 +67,10 @@ namespace Agibank.Domain.Tests.Steps
         public void EntaoOResultadoEsperadoEUmaInstanciaDeUmCliente(Table table)
         {
             construtor.Add(linha);
+
             var cliente = construtor.Clientes.FirstOrDefault();
             var assertCliente = table.Rows[0];
+
             Assert.Equal(cliente.Cnpj, assertCliente["CNPJ"]);
             Assert.Equal(cliente.Nome, assertCliente["Nome"]);
             Assert.Equal(cliente.AreaNegocio, assertCliente["Area Negocio"]);
@@ -79,8 +86,11 @@ namespace Agibank.Domain.Tests.Steps
         public void EntaoOResultadoEsperadoEUmaInstanciaDeUmaVenda(Table table)
         {
             construtor.Add(linha);
+
             var vendas = construtor.Vendas.FirstOrDefault();
+
             var assertVendas = table.Rows[0];
+
             Assert.Equal(vendas.Id, int.Parse(assertVendas["Venda Id"], CultureInfo.InvariantCulture));
             Assert.Equal(vendas.VendedorNome, assertVendas["Vendedor Nome"]);
         }
@@ -89,10 +99,12 @@ namespace Agibank.Domain.Tests.Steps
         public void EntaoOsItensDaDaVendaSao(Table table)
         {
             var itensVenda = construtor.Vendas.FirstOrDefault().Items;
+
             for (int i = 0; i < table.Rows.Count; i++)
             {
                 var assertItensVendas = table.Rows[i];
                 var item = itensVenda[i];
+
                 Assert.Equal(item.Id, int.Parse(assertItensVendas["Item ID"], CultureInfo.InvariantCulture));
                 Assert.Equal(item.Quantidade, int.Parse(assertItensVendas["Item Quantidade"], CultureInfo.InvariantCulture));
                 Assert.Equal(item.Preco, decimal.Parse(assertItensVendas["Item Preço"], CultureInfo.InvariantCulture));
@@ -111,7 +123,12 @@ namespace Agibank.Domain.Tests.Steps
         [Then(@"O resultado esperado da analise é:")]
         public void EntaoOResultadoEsperadoDaAnaliseE(Table table)
         {
-            var analise = new AnaliseVendasRelatorio(construtor);
+            var analise = new AnaliseVendasRelatorio()
+                    .ComClientes(construtor.Clientes)
+                    .ComVendedores(construtor.Vendedores)
+                    .ComVendas(construtor.Vendas)
+                    .Construir();
+
             var row = table.Rows[0];
 
             Assert.Equal(analise.Clientes, int.Parse(row["Quantidade Clientes"]));
