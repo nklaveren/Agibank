@@ -17,6 +17,7 @@ namespace Agibank.Domain.Services
         {
             this.provider = provider;
         }
+        
         public IEnumerable<string> GetAllFiles(string path, string extension)
         {
             var files = provider.GetDirectoryContents(path).Where(x => x.Name.EndsWith(extension));
