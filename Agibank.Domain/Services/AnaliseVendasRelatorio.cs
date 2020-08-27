@@ -6,6 +6,7 @@ namespace Agibank.Domain.Services
 {
     public class AnaliseVendasRelatorio
     {
+        const string SEPARADOR = "ç";
         private List<Entities.Cliente> _clientes;
         private List<Entities.Vendedor> _vendedores;
         private List<Entities.Vendas> _vendas;
@@ -36,7 +37,7 @@ namespace Agibank.Domain.Services
 
         public override string ToString()
         {
-            return $"{Clientes}ç{Vendedores}ç{MelhorVenda}ç{PiorVendedor}";
+            return $"{Clientes}{SEPARADOR}{Vendedores}{SEPARADOR}{MelhorVenda}{SEPARADOR}{PiorVendedor}";
         }
 
         public AnaliseVendasRelatorio Construir()
@@ -73,6 +74,9 @@ namespace Agibank.Domain.Services
 
         public void Dispose()
         {
+            _vendas = null;
+            _clientes = null;
+            _vendedores = null;
             GC.Collect();
         }
     }

@@ -112,7 +112,7 @@ namespace Agibank.EventBus.Consumer.Tasks
                     .Construir();
 
                 var arquivoSaidaNome = string.Format(config.OutputFilename, arquivoNome);
-                fileService.WriteFile(analise.ToString(), config.PathOut, arquivoSaidaNome);
+                await fileService.WriteFile(analise.ToString(), config.PathOut, arquivoSaidaNome);
                 construtor.Dispose();
                 analise.Dispose();
                 logger.LogInformation($"o arquivo {arquivoNome} foi processado");
