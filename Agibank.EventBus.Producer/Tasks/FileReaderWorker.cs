@@ -19,14 +19,14 @@ namespace Agibank.EventBus.Producer.Tasks
     {
         #region DI / CTOR
 
-        private readonly IFileService fileService;
+        private readonly IArquivoService arquivoService;
         private readonly ILogger<FileReaderWorker> logger;
         readonly List<string> cache = new List<string>();
         private readonly ProducerSettings config;
 
-        public FileReaderWorker(IFileService fileService, ILogger<FileReaderWorker> logger, IOptions<ProducerSettings> config)
+        public FileReaderWorker(IArquivoService arquivoService, ILogger<FileReaderWorker> logger, IOptions<ProducerSettings> config)
         {
-            this.fileService = fileService;
+            this.arquivoService = arquivoService;
             this.logger = logger;
             this.config = config.Value;
         }
@@ -48,7 +48,7 @@ namespace Agibank.EventBus.Producer.Tasks
 
                 while (!stoppingToken.IsCancellationRequested)
                 {
-                    var arquivos = fileService.GetAllFiles(config.PathIn, config.Extension);
+                    var arquivos = arquivoService.ObtemTodos(config.PathIn, config.Extension);
                     var arquivosProcessar = arquivos.Except(cache).ToList();
 
                     if (!arquivosProcessar.Any())
@@ -57,8 +57,6 @@ namespace Agibank.EventBus.Producer.Tasks
                     }
                     arquivosProcessar.ForEach(arquivo =>
                     {
-                        //não estou enviando linha a linha do arquivo para simplificar (tratamento linha a linha demandaria um cache distribuido e sincronização no lado consumer para paralelizar o processamento de cada arquivo)
-
                         logger.LogInformation($"O arquivo {arquivo} foi enviado para o rabbitmq");
                         var arquivoSemExtensao = arquivo.Replace(config.Extension, string.Empty);
                         var body = Encoding.UTF8.GetBytes(arquivoSemExtensao);

@@ -1,4 +1,5 @@
-﻿using Agibank.Domain.Builders;
+﻿using Agibank.Domain.Entities;
+using Agibank.Domain.Tests.Services;
 
 using System.Globalization;
 using System.Linq;
@@ -10,16 +11,16 @@ using Xunit;
 namespace Agibank.Domain.Tests.Steps
 {
     [Binding]
-    public class AnaliseVendasSteps
+    public class AnaliseVendasRelatorioServiceSteps
     {
         string linha;
-        AnaliseVendasRelatorioFactory analiseVendasFactory;
+        Domain.Services.AnaliseVendasRelatorioService analiseVendasFactory;
 
         [BeforeScenario]
         public void Init()
         {
             linha = "";
-            analiseVendasFactory = new AnaliseVendasRelatorioFactory();
+            analiseVendasFactory = MockServices.AnaliseVendasService;
         }
 
         [AfterScenario]
@@ -27,6 +28,7 @@ namespace Agibank.Domain.Tests.Steps
         {
             linha = null;
             analiseVendasFactory = null;
+            
         }
         [Given(@"que tenho dados do vendedor")]
         public void DadoQueTenhoDadosDoVendedor(Table table)
@@ -122,7 +124,7 @@ namespace Agibank.Domain.Tests.Steps
         [Then(@"O resultado esperado da analise é:")]
         public void EntaoOResultadoEsperadoDaAnaliseE(Table table)
         {
-            var analise = analiseVendasFactory.Fabricar();
+            var analise = (AnaliseVendasRelatorio)analiseVendasFactory.Processar();
 
             var row = table.Rows[0];
 

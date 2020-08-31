@@ -1,17 +1,21 @@
-﻿using Agibank.Domain.Entities;
+﻿using Agibank.Domain.Builders;
+using Agibank.Domain.Entities;
+using Agibank.Domain.Interfaces;
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Agibank.Domain.Builders
+namespace Agibank.Domain.Services
 {
-    public sealed class AnaliseVendasRelatorioFactory : IDisposable
+    public class AnaliseVendasRelatorioService : IRelatorioService, IDisposable
     {
         public const char SEPARADOR = 'ç';
         private const string VENDEDOR = "001";
         private const string CLIENTE = "002";
         private const string VENDAS = "003";
+
+        public string RelatorioExtensao => "dat";
 
         public List<Cliente> Clientes { get; set; } = new List<Cliente>();
         public List<Vendas> Vendas { get; set; } = new List<Vendas>();
@@ -19,7 +23,7 @@ namespace Agibank.Domain.Builders
 
         public void Adicionar(string item)
         {
-            var itemSplit = item.Split(AnaliseVendasRelatorioFactory.SEPARADOR);
+            var itemSplit = item.Split(AnaliseVendasRelatorioService.SEPARADOR);
             var tipo = itemSplit[0];
             switch (tipo)
             {
@@ -51,7 +55,7 @@ namespace Agibank.Domain.Builders
             };
         }
 
-        public AnaliseVendasRelatorio Fabricar()
+        public IRelatorio Processar()
         {
             var relatorio = new AnaliseVendasRelatorio();
             if (Clientes != null)

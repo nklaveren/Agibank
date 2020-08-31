@@ -1,11 +1,11 @@
 ﻿#language: pt-br
 Funcionalidade: Análise Vendas
-o sistema deve importar
-lotes de arquivos, ler e analisar os dados e produzir um relatório.
+o serviço deve ser capaz de traduzir as três entradas possíveis de dados e converter
+em entidades do dominio.
 Existem 3 tipos de dados dentro desses arquivos.
 Para cada tipo de dados há um layout diferente.
 
-@(FECT)
+@(AnaliseVendasRelatorioService)
 Cenário: Dados do vendedor
 	Dado que tenho dados do vendedor
 		| Linha                         |
@@ -14,7 +14,7 @@ Cenário: Dados do vendedor
 		| Tipo | CPF           | Nome  | Salario |
 		| 001  | 1234567891234 | Pedro | 50000   |
 
-@(FECT)
+@(AnaliseVendasRelatorioService)
 Cenário: Dados do Cliente
 	Dado que tenho dados do Cliente
 		| Linha                                    |
@@ -23,7 +23,7 @@ Cenário: Dados do Cliente
 		| Tipo | CNPJ             | Nome          | Area Negocio |
 		| 002  | 2345675434544345 | Jose da Silva | Rural        |
 
-@(FECT)
+@(AnaliseVendasRelatorioService)
 Cenário: Dados da venda
 	Dado que tenho dados da venda
 		| linha                                       |
@@ -37,7 +37,7 @@ Cenário: Dados da venda
 		| 2       | 30              | 2.50       |
 		| 3       | 40              | 3.10       |
 
-@(FECT)
+@(AnaliseVendasRelatorioService)
 Cenário: Relatório completo
 	Dado que tenho as informações:
 		| Linhas                                      |

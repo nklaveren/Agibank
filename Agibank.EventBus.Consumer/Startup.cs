@@ -2,14 +2,13 @@
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using System;
 using HealthChecks.UI.Client;
 using Agibank.Domain.Interfaces;
 using Agibank.Domain.Services;
 using Agibank.EventBus.Consumer.Tasks;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
+using Agibank.Domain.Entities;
 
 namespace Agibank.EventBus.Consumer
 {
@@ -29,8 +28,10 @@ namespace Agibank.EventBus.Consumer
             services.Configure<ConsumerSettings>(options => Configuration.GetSection(nameof(ConsumerSettings)).Bind(options));
             services.AddSingleton<IFileProvider>(new PhysicalFileProvider(Directory.GetCurrentDirectory()));
             services.AddOptions()
-                .AddScoped<IFileService, FileService>()
-                .AddHostedService<AnaliseVendasWorker>();
+                .AddScoped<IArquivoService, ArquivoService>()
+                .AddTransient<IRelatorioService, AnaliseVendasRelatorioService>()
+                .AddTransient<IProcessaArquivoService, ProcessaArquivoService>()
+                  .AddHostedService<AnaliseVendasRelatorioWorker>();
         }
 
         public void Configure(IApplicationBuilder app)

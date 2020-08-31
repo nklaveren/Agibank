@@ -28,7 +28,7 @@ namespace Agibank.EventBus.Producer
             services.AddSingleton<IFileProvider>(new PhysicalFileProvider(Directory.GetCurrentDirectory()));
             services.Configure<ProducerSettings>(options => Configuration.GetSection(nameof(ProducerSettings)).Bind(options));
             services.AddOptions()
-                .AddScoped<IFileService, FileService>()
+                .AddScoped<IArquivoService, ArquivoService>()
                 .AddHostedService<FileReaderWorker>();
         }
 

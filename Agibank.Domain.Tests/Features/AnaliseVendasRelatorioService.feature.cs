@@ -28,7 +28,7 @@ namespace Agibank.Domain.Tests.Features
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "AnaliseVendas.feature"
+#line 1 "AnaliseVendasRelatorioService.feature"
 #line hidden
         
         public AnaliseVendasFeature(AnaliseVendasFeature.FixtureData fixtureData, Agibank_Domain_Tests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
@@ -40,9 +40,9 @@ namespace Agibank.Domain.Tests.Features
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("pt-br"), "Features", "Análise Vendas", "o sistema deve importar\r\nlotes de arquivos, ler e analisar os dados e produzir um" +
-                    " relatório.\r\nExistem 3 tipos de dados dentro desses arquivos.\r\nPara cada tipo de" +
-                    " dados há um layout diferente.", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("pt-br"), "Features", "Análise Vendas", "o serviço deve ser capaz de traduzir as três entradas possíveis de dados e conver" +
+                    "ter\r\nem entidades do dominio.\r\nExistem 3 tipos de dados dentro desses arquivos.\r" +
+                    "\nPara cada tipo de dados há um layout diferente.", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -85,11 +85,11 @@ namespace Agibank.Domain.Tests.Features
         [Xunit.SkippableFactAttribute(DisplayName="Dados do vendedor")]
         [Xunit.TraitAttribute("FeatureTitle", "Análise Vendas")]
         [Xunit.TraitAttribute("Description", "Dados do vendedor")]
-        [Xunit.TraitAttribute("Category", "(FECT)")]
+        [Xunit.TraitAttribute("Category", "(AnaliseVendasRelatorioService)")]
         public virtual void DadosDoVendedor()
         {
             string[] tagsOfScenario = new string[] {
-                    "(FECT)"};
+                    "(AnaliseVendasRelatorioService)"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Dados do vendedor", null, tagsOfScenario, argumentsOfScenario);
 #line 9
@@ -139,11 +139,11 @@ this.ScenarioInitialize(scenarioInfo);
         [Xunit.SkippableFactAttribute(DisplayName="Dados do Cliente")]
         [Xunit.TraitAttribute("FeatureTitle", "Análise Vendas")]
         [Xunit.TraitAttribute("Description", "Dados do Cliente")]
-        [Xunit.TraitAttribute("Category", "(FECT)")]
+        [Xunit.TraitAttribute("Category", "(AnaliseVendasRelatorioService)")]
         public virtual void DadosDoCliente()
         {
             string[] tagsOfScenario = new string[] {
-                    "(FECT)"};
+                    "(AnaliseVendasRelatorioService)"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Dados do Cliente", null, tagsOfScenario, argumentsOfScenario);
 #line 18
@@ -193,11 +193,11 @@ this.ScenarioInitialize(scenarioInfo);
         [Xunit.SkippableFactAttribute(DisplayName="Dados da venda")]
         [Xunit.TraitAttribute("FeatureTitle", "Análise Vendas")]
         [Xunit.TraitAttribute("Description", "Dados da venda")]
-        [Xunit.TraitAttribute("Category", "(FECT)")]
+        [Xunit.TraitAttribute("Category", "(AnaliseVendasRelatorioService)")]
         public virtual void DadosDaVenda()
         {
             string[] tagsOfScenario = new string[] {
-                    "(FECT)"};
+                    "(AnaliseVendasRelatorioService)"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Dados da venda", null, tagsOfScenario, argumentsOfScenario);
 #line 27
@@ -266,11 +266,11 @@ this.ScenarioInitialize(scenarioInfo);
         [Xunit.SkippableFactAttribute(DisplayName="Relatório completo")]
         [Xunit.TraitAttribute("FeatureTitle", "Análise Vendas")]
         [Xunit.TraitAttribute("Description", "Relatório completo")]
-        [Xunit.TraitAttribute("Category", "(FECT)")]
+        [Xunit.TraitAttribute("Category", "(AnaliseVendasRelatorioService)")]
         public virtual void RelatorioCompleto()
         {
             string[] tagsOfScenario = new string[] {
-                    "(FECT)"};
+                    "(AnaliseVendasRelatorioService)"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Relatório completo", null, tagsOfScenario, argumentsOfScenario);
 #line 41
