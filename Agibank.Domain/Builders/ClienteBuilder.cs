@@ -16,6 +16,7 @@ namespace Agibank.Domain.Builders
             this.nome = nome;
             return this;
         }
+        
         public ClienteBuilder ComAreaNegocio(string areaNegocio)
         {
             this.areaNegocio = areaNegocio;
