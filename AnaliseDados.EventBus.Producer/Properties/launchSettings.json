@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "AnaliseDados.EventBus.Producer": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}

@@ -7,11 +7,11 @@ services:
       - "15672:15672"
       - "5672:5672"
 
-  Agibank.EventBus.producer:
-    image: ${DOCKER_REGISTRY-}agibankqueueproducer
+  AnaliseDados.EventBus.producer:
+    image: ${DOCKER_REGISTRY-}AnaliseDadosqueueproducer
     build:
       context: .
-      dockerfile: Agibank.EventBus.Producer/Dockerfile
+      dockerfile: AnaliseDados.EventBus.Producer/Dockerfile
     depends_on:
       - rabbitmq
     volumes:
@@ -25,11 +25,11 @@ services:
       retries: 3
       start_period: 50s
 
-  Agibank.EventBus.consumer:
-    image: ${DOCKER_REGISTRY-}agibankqueueconsumer
+  AnaliseDados.EventBus.consumer:
+    image: ${DOCKER_REGISTRY-}AnaliseDadosqueueconsumer
     build:
       context: .
-      dockerfile: Agibank.EventBus.Consumer/Dockerfile
+      dockerfile: AnaliseDados.EventBus.Consumer/Dockerfile
     depends_on:
       - rabbitmq
     volumes:
